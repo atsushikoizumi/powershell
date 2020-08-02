@@ -19,11 +19,15 @@ $PSCommandPath,$PSScriptRoot,$Error<br>
 
 ・if ディレクトリ・ファイル有無<br>
 
+・if -And -Or <br>
+
 ・if 数値の比較<br>
 
 ・if 文字列の包含　～に含まれる<br>
 
 ・if 文字列の包含　～を含む<br>
+
+・if 文字列が空文字またはnullのとき<br>
 
 ・function<br>
 

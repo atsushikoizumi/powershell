@@ -94,7 +94,9 @@ if (Test-Path -Path $LOG_FILE ) {
     Remove-Item $LOG_FILE
 }
 
-if ( -not (Test-Path -Path $LOG_FILE)) {
+
+### if -And -Or 
+if (( -Not (Test-Path -Path $LOG_FILE)) -And ( -not (Test-Path -Path $LOG_FILE))) {
     New-Item $LOG_FILE -ItemType "file"
     Write-Output "make log file."  | Out-File -Append $LOG_FILE
 }
@@ -135,15 +137,21 @@ if ( $count -le 5 ) {
 
 
 ### if 文字列の包含　～に含まれる
+$fruit = "リンゴ"
 if ($fruit -in @('リンゴ', 'イチゴ', 'サクランボ')) {
     # もし `$fruit` がリンゴ、イチゴ、サクランボの中に含まれていれば
 }
 
 
-#3# if 文字列の包含　～を含む
-# -Contains は右側に変数が推奨 $null 値が扱える
-if (@('リンゴ', 'イチゴ', 'サクランボ') -Contains $fruit) {
+### if 文字列の包含　～を含む
+if ($fruit -Contains "リンゴ") {
     # もしリンゴ、イチゴ、サクランボが`$fruit`を含んでいれば
+}
+
+
+### if 文字列が空文字またはnullのとき
+if ([string]::IsNullOrEmpty($fruit)) {
+    # $fruit is null
 }
 
 
