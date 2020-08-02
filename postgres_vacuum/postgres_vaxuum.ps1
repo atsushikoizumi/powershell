@@ -135,7 +135,7 @@ for ( $i = 0; $i -lt $SelectResult1.Count ; $i++ ) {
     if ( -Not ([string]::IsNullOrEmpty($SelectResult1[$i]))) {
 
         $SplitResult = $SelectResult1[$i].Split("|").Trim()
-        $V_A_sql = "VACUUM ANALYZE `"$($SplitResult[0])`".`"$($SplitResult[1])`";`r`n"
+        $V_A_sql = "VACUUM ANALYZE `"$($SplitResult[0])`".`"$($SplitResult[1])`";"
 
         try
         {
