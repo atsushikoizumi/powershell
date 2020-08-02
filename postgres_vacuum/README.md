@@ -11,4 +11,4 @@ VACUUM ANALYZE schema.table;<br>
 
 # 実行方法
 .\postgres_vaxuum.ps1 C:\User\...\postgres_env.ps1<br>
-[postgres_env.ps1] は古パスを指定すること。
+[postgres_env.ps1] はフルパスを指定すること。
