@@ -20,9 +20,27 @@ $Error.Clear()
 $Error          # error 情報出力（中身は配列） $Error[0] が最新エラー情報
 
 
+### New-Item
+# make directory
+New-Item "$PSScriptRoot\testdir" -ItemType "directory" 
+# make file
+New-Item "$PSScriptRoot\testdir\testfile1.txt", `
+         "$PSScriptRoot\testdir\testfile2.txt", `
+         "$PSScriptRoot\testdir\testfile3.txt"  `
+         -ItemType "file" 
+
+
+### Remove-Item
+# remove file
+Remove-Item "$PSScriptRoot\testdir\testfile3.txt" 
+
+# remove directory -Recurse -Force
+Remove-Item "$PSScriptRoot\testdir" -Recurse -Force
+
+
 ### Split-Path
 Split-Path -Parent $PSCommandPath  # C:\Users\...\powershell\base_syntax
-Split-Path -Leaf $PSCommandPath                # sample.ps1
+Split-Path -Leaf $PSCommandPath    # sample.ps1
 
 
 ### Get-date
@@ -39,9 +57,18 @@ $PSCommandPath_Split[1]  # ps1
 
 ### 文字列の結合
 $LOG_FILE = $PSCommandPath_Split[0] + ".log"   # 文字列に変換する場合は "" で囲む
-$LOG_FILE  # C:\Users\...\powershell\base_syntax\sample.log
 Get-ChildItem README.md  2>&1 | Out-File  -Append $LOG_FILE
 Get-ChildItem aaaa       2>&1 | Out-File  -Append $LOG_FILE
+
+
+### Write-Output
+Write-Output "test"
+Write-Output "push console text."  |  Out-File -Append $LOG_FILE
+
+
+### Write-Host
+Write-Host "push console text."  |  Out-File -Append $LOG_FILE # ログファイルに出力されない
+Write-Host "push console text." -ForegroundColor white -BackgroundColor red
 
 
 ### Out-File -Encoding default は UTF-16 LE
@@ -67,7 +94,9 @@ if (Test-Path -Path $LOG_FILE ) {
     Remove-Item $LOG_FILE
 }
 
-if ( -not (Test-Path -Path $LOG_FILE)) {
+
+### if -And -Or 
+if (( -Not (Test-Path -Path $LOG_FILE)) -And ( -not (Test-Path -Path $LOG_FILE))) {
     New-Item $LOG_FILE -ItemType "file"
     Write-Output "make log file."  | Out-File -Append $LOG_FILE
 }
@@ -108,15 +137,21 @@ if ( $count -le 5 ) {
 
 
 ### if 文字列の包含　～に含まれる
+$fruit = "リンゴ"
 if ($fruit -in @('リンゴ', 'イチゴ', 'サクランボ')) {
     # もし `$fruit` がリンゴ、イチゴ、サクランボの中に含まれていれば
 }
 
 
-#3# if 文字列の包含　～を含む
-# -Contains は右側に変数が推奨 $null 値が扱える
-if (@('リンゴ', 'イチゴ', 'サクランボ') -Contains $fruit) {
+### if 文字列の包含　～を含む
+if ($fruit -Contains "リンゴ") {
     # もしリンゴ、イチゴ、サクランボが`$fruit`を含んでいれば
+}
+
+
+### if 文字列が空文字またはnullのとき
+if ([string]::IsNullOrEmpty($fruit)) {
+    # $fruit is null
 }
 
 
